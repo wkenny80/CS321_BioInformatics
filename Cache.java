@@ -1,6 +1,13 @@
 import java.util.NoSuchElementException;
 import java.util.LinkedList;
 
+/**
+ * Cache class provides constructors and necessary methods for creating and
+ * managing a cache. This cache can be utilized by the user to improve performance
+ * of the GeneBank.
+ * @author Will Kenny
+ * Other group members include Justin Halbert and KC Kircher
+ */
 
 public class Cache {
 	private int size = 0;

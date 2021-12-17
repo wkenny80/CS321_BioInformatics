@@ -1,5 +1,10 @@
 public class TreeObject {
-	/* WIlliam Kenny */
+
+	/**
+	 * The TreeObject class
+	 * @author Will Kenny
+	 * Other group members include Justin Halbert and KC Kircher
+	 */
 	
 	public int freq;
 	private long Value;

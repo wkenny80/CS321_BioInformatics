@@ -5,8 +5,13 @@ import java.io.BufferedReader;
 import java.io.RandomAccessFile;
 import java.util.Scanner;
 
-/* William Kenny */
-
+/**
+ * GeneBankCreateBTree class is the driver for the functionality of creating
+ * a BTree from a gene file and storing it. This class reads in the options given it
+ * by the user, creates and stores the corresponding GeneBank file.
+ * @author Will Kenny
+ * Other group members include Justin Halbert and KC Kircher
+ */
 
 public class GeneBankCreateBTree {
 	static BTree bTree;

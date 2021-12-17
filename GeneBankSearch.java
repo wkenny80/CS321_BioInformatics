@@ -3,10 +3,13 @@ import java.io.FileWriter;
 import java.io.RandomAccessFile;
 import java.util.Scanner;
 import java.io.FileNotFoundException;
-/*
- * William Kenny
- */
 
+/**
+ * The GeneBankSearch class is the driver for the functionality of reading in a GeneBank
+ * file and searching the file. It takes arguments from the user and prints out the results.
+ * @author Will Kenny
+ * Other group members include Justin Halbert and KC Kircher
+ */
 
 public class GeneBankSearch {
 	

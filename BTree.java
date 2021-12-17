@@ -3,6 +3,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
+/**
+ * BTree class provides constructors and necessary methods for creating and
+ * managing a BTree. The BTree uses the class BTreeNode and can be initialized 
+ * with a cache.
+ * @author Will Kenny
+ * Other group members include Justin Halbert and KC Kircher
+ */
+
 public class BTree {
 	private BTreeNode nodeMEM;
 	private RandomAccessFile raFile;
@@ -15,8 +23,11 @@ public class BTree {
 	Boolean found = false;
 	Boolean useCache = false;
 
-	/*
+	/**
 	 * Constructor
+	 * @param t
+	 * @param raFile
+	 * @throws Exception
 	 */
 	public BTree(int t, RandomAccessFile raFile) throws Exception {
 		cur = 0;
@@ -33,6 +44,12 @@ public class BTree {
 		x.diskWrite();
 	}
 
+	/**
+	 * Constructor
+	 * @param raFile
+	 * @param check
+	 * @throws IOException
+	 */
 	public BTree(RandomAccessFile raFile, boolean check) throws IOException {
 
 		nodeMEM = root;
@@ -43,11 +60,20 @@ public class BTree {
 		root = root.diskReadR();
 	}
 	
+	/**
+	 * setUseCache
+	 * @param inCache
+	 */
 	public void setUseCache(Cache inCache)	{
 		useCache = true;
 		cache = inCache;
 	}
 	
+	/**
+	 * allocateNode
+	 * @return
+	 * @throws Exception
+	 */
 	private int allocateNode() throws Exception	{
 
 		int a = cur;
@@ -72,6 +98,10 @@ public class BTree {
 		return a;
 	}
 
+	/**
+	 * initialize method
+	 * @throws Exception
+	 */
 	private void initialize() throws Exception {
 		raFile.seek(0);
 		raFile.writeInt(t);
@@ -79,6 +109,14 @@ public class BTree {
 		allocateNode();
 	}
 
+	/**
+	 * splitTree method
+	 * @param node
+	 * @param index
+	 * @param in
+	 * @return
+	 * @throws Exception
+	 */
 	private boolean splitTree(BTreeNode node, int index, TreeObject in) throws Exception {
 
 		BTreeNode tempN = node.diskRead(index);
@@ -97,6 +135,12 @@ public class BTree {
 		return true;
 	}
 
+	/**
+	 * splitChild method
+	 * @param parentNode
+	 * @param index
+	 * @throws Exception
+	 */
 	private void splitChild(BTreeNode parentNode, int index) throws Exception {
 
 		// Creates a new node for after split
@@ -157,8 +201,11 @@ public class BTree {
 		parentNode.diskWrite();		
 	}
 	
-	/*
-	 * increments on node when object is found
+	/**
+	 * incrementCache method: increments on node when object is found
+	 * @param nodeMatch
+	 * @param in
+	 * @throws Exception
 	 */
 	private void incrementCache(BTreeNode nodeMatch, TreeObject in) throws Exception 
 		{
@@ -180,6 +227,11 @@ public class BTree {
 			}
 	}
 
+	/**
+	 * insertNode method: adds a node
+	 * @param in
+	 * @throws Exception
+	 */
 	public void insertNode(TreeObject in) throws Exception {
 
 		BTreeNode temp = root;
@@ -213,8 +265,11 @@ public class BTree {
 		}
 	}
 
-	/*
-	 * find place to insert input
+	/**
+	 * insertNonfull: finds a place to insert a node
+	 * @param anc
+	 * @param in
+	 * @throws Exception
 	 */
 	private void insertNonfull(BTreeNode anc, TreeObject in) throws Exception 
 	{
@@ -272,8 +327,10 @@ public class BTree {
 		}
 	}
  
-	/*
-	 * starts search recursively at root of elements frequency
+	/**
+	 * beginSearch method: starts search recursively at root of elements frequency
+	 * @param k
+	 * @return
 	 */
 	public int beginSearch(long k) 
 	{
@@ -288,9 +345,11 @@ public class BTree {
 		return search(root, k);
 	}
 
-
-	/*
-	 * Recursive search of BTree 
+	/**
+	 * search method: Recursive search of BTree
+	 * @param node
+	 * @param k
+	 * @return
 	 */
 	private int search(BTreeNode node, long k) {
 		try {
@@ -323,6 +382,13 @@ public class BTree {
 		}
 	}
 	
+	/**
+	 * traverse method
+	 * @param traverse
+	 * @param fileW
+	 * @param length
+	 * @throws Exception
+	 */
 	private void traverse(BTreeNode traverse, FileWriter fileW, int length) throws Exception {
 		int obj = traverse.getObjectCount();
 		int child = traverse.getChildPCount();
@@ -349,6 +415,13 @@ public class BTree {
 		}	
 	}
 
+	/**
+	 * traverseTree
+	 * @param file
+	 * @param longV
+	 * @param length
+	 * @throws Exception
+	 */
 	public void traverseTree(String file, int longV, int length) throws Exception {
 		int s = GeneBankCreateBTree.sSize;
 		
@@ -361,6 +434,13 @@ public class BTree {
 
 	}
 
+	/**
+	 * convertBackToString
+	 * @param Bstr
+	 * @param freq
+	 * @param lengthS
+	 * @return
+	 */
 	private String convertBackToString(long Bstr, int freq, int lengthS) {
 
 		String str = Long.toBinaryString(Bstr);
@@ -400,6 +480,10 @@ public class BTree {
 		return strB.toString();
 	}
 	
+	/**
+	 * finish
+	 * @throws Exception
+	 */
 	public void finish() throws Exception {	
 		raFile.seek(4);
 		root.diskWriteAsRoot();

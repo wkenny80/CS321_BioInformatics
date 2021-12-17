@@ -2,6 +2,13 @@ public class DLLNode<T> {
 	private DLLNode<T> next; // ref of next node
 	private DLLNode<T> prev; // ref of prev node
 	private T obj;	// ref to object 
+
+	/**
+	 * DLLNode class provides a constructor and the necessary methods to create a 
+	 * node appropriate for use within a double linked list.
+	 * @author Will Kenny
+	 * Other group members include Justin Halbert and KC Kircher
+	 */
 	
 	/*
 	 * Constructor

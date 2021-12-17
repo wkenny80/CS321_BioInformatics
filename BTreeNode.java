@@ -3,7 +3,13 @@ import java.util.ArrayList;
 import java.io.IOException;
 import java.util.List;
 
-/* William Kenny */
+/**
+ * BTreeNode class provides a Node object useful in populating the BTree used by GeneBankCreateBTree.
+ * Other methods, getters, and setters are also included. The class also has methods for reading and
+ * writing to disk. 
+ * @author Will Kenny
+ * Other group members include Justin Halbert and KC Kircher
+ */
 
 public class BTreeNode {
 
@@ -22,7 +28,12 @@ public class BTreeNode {
 	int offset; // points to 1st byte
 	boolean isLeaf;
 	
-	
+	/**
+	 * BTreeNode Constructor
+	 * @param offset
+	 * @param maxO
+	 * @param raFile
+	 */
 	public BTreeNode(int offset, int maxO, RandomAccessFile raFile) {
 		
 		this.offset = offset;
@@ -40,6 +51,11 @@ public class BTreeNode {
 		
 	}
 	
+	/**
+	 * objectCheck method
+	 * @param in
+	 * @return
+	 */
 	public boolean objectCheck(TreeObject in) {
 		if (objects.contains(in)) 
 		{
@@ -48,26 +64,47 @@ public class BTreeNode {
 		return false;
 	}
 	
+	/**
+	 * setParent method
+	 * @param n
+	 */
 	public void setParent(BTreeNode n) {
 		
 		this.parent = n;
 	}
 	
+	/**
+	 * setObjectCount method
+	 * @param x
+	 */
 	public void setObjectCount(int x) {
 		
 		this.objectCount = x;
 	}
 	
+	/**
+	 * setParentP
+	 * @param p
+	 */
 	public void setParentP(int p) {
 		
 		this.parentP = p;
 	}
 	
+	/**
+	 * setObjects
+	 * @param list
+	 */
 	public void setObjects(List<TreeObject> list) {
 		
 		this.objects = list;
 	}
 	
+	/**
+	 * setObject
+	 * @param index
+	 * @param T
+	 */
 	public void setObject(int index, TreeObject T) {
 		
 		if (index < objects.size()) {
@@ -81,6 +118,10 @@ public class BTreeNode {
 		}
 	}
 	
+	/**
+	 * setLeaf method
+	 * @param x
+	 */
 	public void setLeaf(int x) {
 		
 		if (x == 1) {
@@ -91,6 +132,11 @@ public class BTreeNode {
 		else isLeaf = false;
 	}
 	
+	/**
+	 * setChild method
+	 * @param index
+	 * @param n
+	 */
 	public void setChild(int index, int n) {
 		
 		if (index < childP.size()) {
@@ -105,32 +151,57 @@ public class BTreeNode {
 	
 	}
 
+	/**
+	 * setChildP method
+	 * @param list
+	 */
 	public void setChildP(List<Integer> list) {
 		
 		this.childP = list;
 	}
 	
+	/**
+	 * getChildPCount method
+	 * @return
+	 */
 	public int getChildPCount() {
 		
 		return childP.size() - 1;
 	}
 	
-	
+	/**
+	 * getParentP method
+	 * @return parentP
+	 */
 	public int getParentP() {
 		
 		return parentP;
 	}
 	
+	/**
+	 * getObjectCount method
+	 * @return object count
+	 */
 	public int getObjectCount() {
 		
 		return this.objectCount;
 	}
 	
+	/**
+	 * getChild method
+	 * @param index
+	 * @return
+	 */
 	public int getChild(int index) {
 		
 		return this.childP.get(index);
 	}
 	
+	/**
+	 * getObject method
+	 * @param index
+	 * @return
+	 */
 	public TreeObject getObject(int index) {
 		
 		TreeObject object = objects.get(index);
@@ -138,6 +209,10 @@ public class BTreeNode {
 		return object;
 	}
 
+	/**
+	 * getLeaf
+	 * @return
+	 */
 	public boolean getLeaf() {
 		
 		if (childP.size() == 1) {
@@ -148,23 +223,38 @@ public class BTreeNode {
 		else return false;
 	}
 	
-	
+	/**
+	 * removeChild
+	 * @param index
+	 */
 	public void removeChild(int index) {
 		
 		childP.remove(index);
 	}
 	
+	/**
+	 * removeObject
+	 * @param index
+	 */
 	public void removeObject(int index) {
 		
 		objects.remove(index);
 	}
 	
+	/**
+	 * addObject
+	 * @param index
+	 * @param object
+	 */
 	public void addObject(int index, TreeObject object) {
 		
 		objects.add(index, object);
 	}
 	
-	
+	/**
+	 * diskWrite method
+	 * @throws Exception
+	 */
 	public void diskWrite() throws Exception {
 		
 		raFile.seek(offset); 
@@ -212,6 +302,10 @@ public class BTreeNode {
 	    }	    
 	}
 	
+	/**
+	 * diskWriteAsRoot method
+	 * @throws Exception
+	 */
 	public void diskWriteAsRoot() throws Exception {
 		
 		raFile.seek(4); 
@@ -258,6 +352,12 @@ public class BTreeNode {
 	    }	    
 	}
 	
+	/**
+	 * diskRead method
+	 * @param childI
+	 * @return
+	 * @throws Exception
+	 */
 	public BTreeNode diskRead(int childI) throws Exception {
 		
 		BTreeNode nextNode = new BTreeNode(childP.get(childI), maxO, raFile);
@@ -304,6 +404,11 @@ public class BTreeNode {
 	    return nextNode;
 	}
 	
+	/**
+	 * diskReadR
+	 * @return
+	 * @throws IOException
+	 */
 	public BTreeNode diskReadR() throws IOException {
 		
 		BTreeNode newNode = new BTreeNode(4, maxO, raFile);
